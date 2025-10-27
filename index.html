@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Arepísimas - Crea tu Arepa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+:root{ --bg:#0d0d0d; --card:#1a1a1a; --accent:#ffcc00; --accent-dark:#ffaa00; --muted:#aaa; --white:#fff; }
+*{box-sizing:border-box;}
+body{ margin:0; font-family:'Poppins',sans-serif; background:radial-gradient(circle at top left,#111,#000); color:var(--white); -webkit-font-smoothing:antialiased; }
+header{ background:linear-gradient(90deg,var(--accent),var(--accent-dark)); color:#000; text-align:center; padding:24px 16px; font-weight:700; letter-spacing:1px; font-size:1.2rem; text-shadow:0 1px 3px rgba(0,0,0,0.3); }
+.wrap{ max-width:800px; margin:32px auto; padding:28px; }
+.card{ background:var(--card); border-radius:20px; padding:32px; border:1px solid rgba(255,204,0,0.18); box-shadow:0 12px 30px rgba(0,0,0,0.6),0 0 20px rgba(255,204,0,0.06); }
+.logo{display:flex;justify-content:center;margin-bottom:24px;}
+.logo img{ width:140px; border-radius:50%; border:3px solid var(--accent); box-shadow:0 0 16px rgba(255,204,0,0.35); }
+h1{ margin:0; color:var(--accent); text-align:center; font-size:1.5rem; letter-spacing:1px; }
+h2{ color:var(--accent); text-align:left; margin:24px 0 12px; font-size:1.1rem; border-bottom:1px solid rgba(255,204,0,0.3); padding-bottom:6px; }
+label{ display:block; color:var(--accent); font-weight:600; margin:12px 0 6px; font-size:0.95rem; }
+.row{display:flex;gap:16px;flex-wrap:wrap;}
+select,input[type="text"],input[type="tel"],textarea{ width:100%; padding:12px 14px; background:#222; border:1px solid rgba(255,204,0,0.06); color:var(--white); border-radius:12px; font-size:0.95rem; transition:all 0.2s ease; }
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);}
+.inline{flex:1;min-width:180px;}
+.checkbox-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;}
+.check{ background:#222; padding:10px 12px; border-radius:10px; border:1px solid rgba(255,204,0,0.06); display:flex; align-items:center; gap:8px; cursor:pointer; transition:all 0.2s ease; }
+.check:hover{background:rgba(255,204,0,0.05);}
+.check input{transform:scale(1.1);margin:0;}
+.total{ margin-top:24px; background:var(--accent); color:#000; padding:16px; border-radius:12px; text-align:center; font-weight:700; font-size:1.2rem; box-shadow:0 6px 18px rgba(255,204,0,0.25); }
+.actions{margin-top:24px;display:flex;gap:12px;flex-direction:column;}
+button.primary{ background:linear-gradient(90deg,var(--accent),var(--accent-dark)); color:#000; border:none; padding:16px; border-radius:14px; font-weight:700; font-size:1rem; cursor:pointer; transition:transform .18s ease,box-shadow .18s; }
+button.primary:hover{transform:scale(1.02);box-shadow:0 8px 24px rgba(255,204,0,0.25);}
+.note{color:var(--muted);font-size:0.9rem;margin-top:12px;text-align:center;}
+footer{margin-top:32px;text-align:center;color:var(--muted);font-size:0.9rem;}
+@media (max-width:640px){ .row{flex-direction:column;} .inline{min-width:100%;} }
+</style>
+</head>
+<body>
+<header>🌽 Arepísimas — El sabor que enamora</header>
+<div class="wrap">
+  <div class="card">
+    <div class="logo">
+      <img src="Captura.JPG" alt="Arepísimas">
+    </div>
+    <h1>Diseña tu Arepa Perfecta</h1>
+    <p style="text-align:center;color:var(--muted);margin:8px 0 18px">
+      Elige masa, rellenos y extras. Revisa el total y confirma tu pedido.
+    </p>
+    <h2>1 • Selecciones</h2>
+    <label for="masa">Arepas</label>
+    <select id="masa" onchange="calcularTotal()">
+      <option value="1300" selected>Arepa — $1.300</option>
+    </select>
+    <label style="margin-top:14px">Rellenos (marca los que quieras)</label>
+    <div class="checkbox-grid" id="rellenos">
+      <label class="check"><input type="checkbox" value="1800" onchange="calcularTotal()"><span>🧀 Doble Queso — $1.800</span></label>
+      <label class="check"><input type="checkbox" value="1000" onchange="calcularTotal()"><span>🧀 Queso — $1.000</span></label>
+      <label class="check"><input type="checkbox" value="1000" onchange="calcularTotal()"><span>🌭 Salchicha — $1.000</span></label>
+      <label class="check"><input type="checkbox" value="2000" onchange="calcularTotal()"><span>🥑 Aguacate — $2.000</span></label>
+      <label class="check"><input type="checkbox" value="1100" onchange="calcularTotal()"><span>🍖 Jamón — $1.100</span></label>
+      <label class="check"><input type="checkbox" value="3600" onchange="calcularTotal()"><span>🍗 Pollo — $3.600</span></label>
+      <label class="check"><input type="checkbox" value="5500" onchange="calcularTotal()"><span>🥩 Carne — $5.500</span></label>
+      <label class="check"><input type="checkbox" value="1200" onchange="calcularTotal()"><span>🥚 Huevo — $1.200</span></label>
+      <label class="check"><input type="checkbox" value="5000" onchange="calcularTotal()"><span>🥓 Chicharrón — $5.000</span></label>
+      <label class="check"><input type="checkbox" value="1700" onchange="calcularTotal()"><span>🌽 Maíz — $1.700</span></label>
+      <label class="check"><input type="checkbox" value="3000" onchange="calcularTotal()"><span>🍄 Champiñon — $3.000</span></label>
+    </div>
+    <h2 style="margin-top:18px">2 • Datos del cliente</h2>
+    <div class="row">
+      <div class="inline">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" placeholder="Ej. Juan Pérez">
+      </div>
+      <div class="inline">
+        <label for="telefono">Teléfono (opcional)</label>
+        <input type="tel" id="telefono" placeholder="Ej. 3001234567">
+      </div>
+    </div>
+    <label style="margin-top:12px">¿Pedido dentro del local o a domicilio?</label>
+    <div class="row">
+      <div class="inline">
+        <label for="mesa">Número de mesa (si aplica)</label>
+        <input type="text" id="mesa" placeholder="Ej. MESA 5">
+      </div>
+      <div class="inline">
+        <label for="direccion">Dirección de entrega (si aplica)</label>
+        <input type="text" id="direccion" placeholder="Calle 123 #45-67, Bogotá">
+      </div>
+    </div>
+    <div id="total" class="total">Total: $1.300</div>
+    <div class="actions">
+      <button class="primary" onclick="enviarPedido()">📲 Confirmar y enviar pedido</button>
+      <div class="note">Se requiere Nombre y al menos *Mesa* o *Dirección* para completar el pedido.</div>
+    </div>
+  </div>
+  <footer> © 2025 <strong>Arepísimas</strong> — El sabor que enamora 🖤💛🤍 </footer>
+</div>
+<script>
+const WHATSAPP_NUMBER = '573207985976';
+
+function calcularTotal(){
+  let total = parseInt(document.getElementById('masa').value || 0);
+  document.querySelectorAll('#rellenos input[type="checkbox"]').forEach(cb => {
+    if(cb.checked){ total += parseInt(cb.value || 0); }
+  });
+  document.getElementById('total').textContent = 'Total: $' + total.toLocaleString('es-CO');
+  return total;
+}
+
+function enviarPedido(){
+  const nombre = (document.getElementById('nombre').value || '').trim();
+  const telefono = (document.getElementById('telefono').value || '').trim();
+  const mesa = (document.getElementById('mesa').value || '').trim();
+  const direccion = (document.getElementById('direccion').value || '').trim();
+  
+  if(!nombre){ alert('Por favor ingresa tu nombre.'); return; }
+  if(!mesa && !direccion){ alert('Por favor indica número de mesa o dirección.'); return; }
+  
+  const rellenos = [];
+  document.querySelectorAll('#rellenos input[type="checkbox"]').forEach(cb=>{
+    if(cb.checked){
+      rellenos.push(cb.parentElement.textContent.trim());
+    }
+  });
+  
+  const total = calcularTotal();
+  const totalFormateado = '$' + total.toLocaleString('es-CO');
+  const ubicacion = mesa ? `Mesa: ${mesa}` : `Dirección: ${direccion}`;
+  const contacto = telefono ? `Teléfono: ${telefono}` : 'Teléfono: (no provisto)';
+  const timestamp = new Date().toLocaleString('es-CO', { hour12:false });
+  
+  const mensaje = `*¡Pedido Gourmet - Arepísimas!*
+──────────────────────────────
+*Cliente:* ${nombre}
+${contacto}
+*Ubicación:* ${ubicacion}
+──────────────────────────────
+*Masa:* Arepa — $1.300
+*Rellenos Seleccionados:*
+${rellenos.length ? rellenos.map(r=>' ▸ '+r).join('\n') : ' ▸ Sin rellenos'}
+──────────────────────────────
+*Total a pagar:* ${totalFormateado}
+──────────────────────────────
+Pedido generado el: ${timestamp}
+Desde: *Web Oficial Arepísimas*
+──────────────────────────────
+¡Gracias por tu pedido! Disfruta de la experiencia Arepísimas.`;
+
+  const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(mensaje);
+  window.open(url, '_blank');
+}
+
+calcularTotal();
+</script>
+</body>
+</html>
+
